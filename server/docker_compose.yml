@@ -1,0 +1,38 @@
+version: "3.8"
+
+services:
+  database:
+    image: postgres:12.0-alpine
+    container_name: personal_journal_db
+    volumes:
+      - personal_journal_data:/var/lib/postgresql/data
+    env_file: ./.env.db
+
+  personal_journal:
+    container_name: personal_journal_server
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+    command: >
+      sh -c "
+      python manage.py makemigrations --noinput &&
+      python manage.py migrate --noinput &&
+      python manage.py collectstatic --no-input &&
+      python manage.py create_user --user=$DJANGO_SUPERUSER_USERNAME --password=$DJANGO_SUPERUSER_PASSWORD --email=$DJANGO_SUPERUSER_EMAIL &&
+      python manage.py runserver 0.0.0.0:80"
+    ports:
+      - "8000:80"
+    env_file: ./.env
+    depends_on:
+      - database
+    volumes:
+      - ./app/:/app
+      - static_volume:/app/static
+      - media_volume:/app/media
+      - logs_volume:/app/logs
+
+volumes:
+  static_volume:
+  media_volume:
+  logs_volume:
+  personal_journal_data:
