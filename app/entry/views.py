@@ -4,6 +4,7 @@ from rest_framework.authtoken.models import Token
 from .models import EntryCategory, Entry
 from entry.helpers.filter_helpers import FilterHelper
 from user.models import UserModel
+import time
 
 @api_view(['POST'])
 def create_journal_category(request):

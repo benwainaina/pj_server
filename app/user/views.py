@@ -90,7 +90,7 @@ def update_profile(request):
     username = data.get('username')
     password = data.get('newPassword')
     current_password = data.get('currentPassword')
-    if not username or not password or not current_password:
+    if not current_password and (not username or not password):
         response.status_code = 400
         response.data = {'status': 'INVALID_DATA'}
     else:
@@ -102,17 +102,20 @@ def update_profile(request):
                 response.status_code = 403
                 response.data = {'status': 'NOT_ALLOWED'}
             else:
-                try:
-                    Token.objects.get(user=user_instance.user_ref).delete()
-                except:
-                    pass
-                user_instance.username = username
-                user_instance.user_ref.password = make_password(password)
+                if username:
+                    user_instance.username = username
+                if password:
+                    try:
+                        Token.objects.get(user=user_instance.user_ref).delete()
+                    except:
+                        pass
+                    user_instance.user_ref.password = make_password(password)
                 user_instance.user_ref.save()
                 user_instance.save()
                 response.status_code = 200
                 response.data = {'status': 'SUCCESS'}
         except Exception as e:
+            print('e', e)
             response.status_code = 500
             response.data = {'status': 'INTERNAL_SERVER_ERROR'}
     return response

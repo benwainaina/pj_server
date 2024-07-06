@@ -26,7 +26,7 @@ class FilterHelper(object):
         self.results = self._marshall_data(results)
         
     def _filter_get_all_entries(self):
-        return Entry.objects.all()
+        return Entry.objects.filter(owner=self.user_instance)
     
     def _filter_entries_by_category(self, all_results):
         category = self.filter_fields.get('category')
