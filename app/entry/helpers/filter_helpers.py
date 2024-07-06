@@ -1,6 +1,5 @@
 from entry.models import Entry, EntryCategory
 from django.db.models import Q
-from datetime import datetime
 
 class FilterHelper(object):
     def __init__(self, *args,**kwargs) -> None:

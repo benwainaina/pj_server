@@ -1,4 +1,3 @@
-# TODO: Keep an eye on this python change from 3.7 to 3.9
 FROM python:3.9-alpine
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
