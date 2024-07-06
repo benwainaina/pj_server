@@ -91,7 +91,6 @@ def create_entry(request):
 def update_journal(request):
     response = Response()
     data = get_request_data(request)
-    print('data', data)
     title = data.get('title')
     content = data.get('content')
     category = data.get('category')

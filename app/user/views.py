@@ -115,7 +115,6 @@ def update_profile(request):
                 response.status_code = 200
                 response.data = {'status': 'SUCCESS'}
         except Exception as e:
-            print('e', e)
             response.status_code = 500
             response.data = {'status': 'INTERNAL_SERVER_ERROR'}
     return response
