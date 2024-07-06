@@ -5,5 +5,7 @@
    1. change run.sh to be executable by typing:
       1. chmod +x run.sh
       2. type `./run.sh` and hit `enter`
+3. You can now access the API documentation at this endpoint:
+   - http://localhost:8000/swagger/
 
 That is it!
